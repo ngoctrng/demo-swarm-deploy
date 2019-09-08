@@ -17,6 +17,7 @@ jobs:
     steps:
       - setup_remote_docker
       - run: echo $IMAGE_NAME
+      - run: docker images
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
