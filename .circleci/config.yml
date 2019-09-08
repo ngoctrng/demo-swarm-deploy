@@ -24,12 +24,20 @@ jobs:
           root: .
           paths:
             - ./image.tar
+      - save_cache: # Caches dependencies with a cache key
+      # template for an environment variable,
+      # see circleci.com/docs/2.0/caching/
+          key: v1-cache-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - node_modules
   publish-latest:
     executor: docker-publisher
     steps:
       - attach_workspace:
           at: /tmp/workspace  
       - setup_remote_docker
+      - restore_cache: # Restores the cached dependency.
+          key: v1-cache-{{ .Environment.CIRCLE_SHA1 }}
       - run: echo $IMAGE_NAME
       - run: docker images
       - run:
@@ -38,7 +46,7 @@ jobs:
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
-            PREV_VERSION=${CIRCLE_BUILD_NUM}
+            PREV_VERSION=0.0.${CIRCLE_BUILD_NUM}
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$PREV_VERSION
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
