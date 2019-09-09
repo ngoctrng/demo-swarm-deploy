@@ -1,21 +1,19 @@
-version: '3'
-
-services: 
+version: "3"
+services:
   demo-web:
-    image: demo-app
-    deploy: 
+    image: truong996/demo-deploy-swarm:latest
+    deploy:
       replicas: 2
       resources:
-        limits: 
+        limits:
           cpus: "0.1"
           memory: 64M
       restart_policy:
         condition: on-failure
-    ports: 
-      - "3000:3000"
+    ports:
+      - "80:3000"
     command: ["npm", "start"]
     networks:
       - webnet
-      
-networks:
+networks: 
   webnet:
