@@ -51,6 +51,20 @@ jobs:
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$PREV_VERSION
+  deploy-dev:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - setup_remote_docker
+      - run: mkdir -pv ~/.docker
+      - run: touch ~/.docker/ca.pem ~/.docker/cert.pem ~/.docker/key.pem
+      - run: |
+          echo $CA_PEM > ~/.docker/ca.pem
+          echo $CERT_PEM > ~/.docker/cert.pem
+          echo $KEY_PEM > ~/.docker/key.pem
+          export DOCKER_HOST=$SWARM_HOST DOCKER_TLS_VERIFY=1
+      - run: docker ps
+      
 
 workflows:
   version: 2
