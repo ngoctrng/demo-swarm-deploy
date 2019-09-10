@@ -64,7 +64,7 @@ jobs:
           echo $KEY_PEM > ./.docker/key.pem
           export DOCKER_HOST=$SWARM_HOST DOCKER_TLS_VERIFY=1
           export DOCKER_CERT_PATH=./.docker
-      - run: docker ps
+      - run: docker --tlsverify ps
       
 
 workflows:
