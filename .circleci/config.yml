@@ -65,6 +65,7 @@ jobs:
           export DOCKER_HOST=$SWARM_HOST DOCKER_TLS_VERIFY=1
           export DOCKER_CERT_PATH=./.docker
       - run: docker --tlsverify ps
+      - run: docker --tlsverify --tlscacert=./.dockerca.pem --tlscert=./.dockercert.pem --tlskey=./.dockerkey.pem -H=$SWARM_HOST ps
       
 
 workflows:
