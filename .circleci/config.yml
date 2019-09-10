@@ -56,7 +56,7 @@ jobs:
       - image: circleci/node:10
     steps:
       - setup_remote_docker
-      - run: mkdir -pv /home/.docker
+      - run: mkdir -p /home/.docker
       - run: touch /home/.docker/ca.pem /home/.docker/cert.pem /home/.docker/key.pem
       - run: |
           pwd
