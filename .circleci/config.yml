@@ -80,3 +80,9 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy-dev:
+          requires:
+            - publish-latest
+          filters:
+            branches:
+              only: master
