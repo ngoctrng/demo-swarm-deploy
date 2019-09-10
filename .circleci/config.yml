@@ -52,7 +52,8 @@ jobs:
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$PREV_VERSION
   deploy-dev:
-    machine: true
+    docker:
+      - image: circleci/node:10
     steps:
       - setup_remote_docker
       - run: mkdir -pv ./.docker
@@ -72,19 +73,19 @@ workflows:
   version: 2
   build-master:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: master
-      - publish-latest:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      # - build:
+      #     filters:
+      #       branches:
+      #         only: master
+      # - publish-latest:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
       - deploy-dev:
-          requires:
-            - publish-latest
+          # requires:
+          #   - publish-latest
           filters:
             branches:
               only: master
