@@ -56,13 +56,13 @@ jobs:
       - image: circleci/node:10
     steps:
       - setup_remote_docker
-      - run: mkdir -pv ./.docker
-      - run: touch ./.docker/ca.pem ./.docker/cert.pem ./.docker/key.pem
+      - run: mkdir -pv /home/.docker
+      - run: touch /home/.docker/ca.pem /home/.docker/cert.pem /home/.docker/key.pem
       - run: |
           pwd
-          echo $CA_PEM > ./.docker/ca.pem
-          echo $CERT_PEM > ./.docker/cert.pem
-          echo $KEY_PEM > ./.docker/key.pem
+          echo $CA_PEM > /home/.docker/ca.pem
+          echo $CERT_PEM > /home/.docker/cert.pem
+          echo $KEY_PEM > /home/.docker/key.pem
           export DOCKER_HOST=$SWARM_HOST DOCKER_TLS_VERIFY=1
           echo $DOCKER_HOST
       - run: docker ps
