@@ -60,8 +60,11 @@ jobs:
       - run: touch ~/.docker/ca.pem ~/.docker/cert.pem ~/.docker/key.pem
       - run: |
           echo $CA_PEM > ~/.docker/ca.pem
+          cat ~/.docker/ca.pem
           echo $CERT_PEM > ~/.docker/cert.pem
+          cat ~/.docker/cert.pem
           echo $KEY_PEM > ~/.docker/key.pem
+          cat ~/.docker/key.pem
           export DOCKER_HOST=$SWARM_HOST DOCKER_TLS_VERIFY=1
       - run: docker ps
       
